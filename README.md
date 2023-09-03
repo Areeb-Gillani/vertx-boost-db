@@ -58,7 +58,6 @@ One can add multiple connection configurations in this way, and upon creating th
   }
 }
 ```
-```
  
 # Usage
 This project out of the box gives CrudRepository, MySQLRepository, MSSQLRepository, PostgresRepository, and OracleRepository which a user can extend. It is preferred to use CrudRepository as its factory can create all types of repos based on the dbType attribute present in the connection configuration. 
@@ -67,6 +66,18 @@ This project out of the box gives CrudRepository, MySQLRepository, MSSQLReposito
 public class MyRepo extends CrudRepository {
     public MyRepo(String connectionName){
         super(connectionName);
+    }
+    //Please code other related stuff here.
+}
+```
+```java
+public class ExampleCaller {
+    MyRepo repo;
+    public void someDatabaseOperation(){
+        repo = new MyRepo("Primary"); // "Primary" is same identifier you saw in configuration JSON.
+        // You can create this object as many times as you want
+        // because the parent is initializing the connection on singleton pattern
+        // This is independent of connection pool size 
     }
     //Please code other related stuff here.
 }
