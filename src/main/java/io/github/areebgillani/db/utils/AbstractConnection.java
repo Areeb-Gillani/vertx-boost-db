@@ -10,8 +10,8 @@ public abstract class AbstractConnection<T, C> {
     protected PoolOptions poolOptions = null;
 
     protected Vertx vertx;
-    public AbstractConnection(Vertx vertx){
-        this.vertx = vertx;
+    public AbstractConnection(){
+        this.vertx = Vertx.currentContext().owner();
     }
 
     protected abstract C getSQLPool();

@@ -5,8 +5,7 @@ import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
 
 public class MSSQLRepository<T> extends AbstractRepository<T> {
-
-    public MSSQLRepository(Vertx vertx, JsonObject config) {
-        databaseConnection = new MSSQLConnection(vertx, config);
+    public MSSQLRepository(String connectionName) {
+        databaseConnection = MSSQLConnection.getInstance(connectionName);
     }
 }

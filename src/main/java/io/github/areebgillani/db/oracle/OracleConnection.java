@@ -1,5 +1,6 @@
 package io.github.areebgillani.db.oracle;
 
+import io.github.areebgillani.db.mssql.MSSQLConnection;
 import io.github.areebgillani.db.utils.AbstractConnection;
 import io.github.areebgillani.db.utils.DatabaseConfig;
 import io.vertx.core.Vertx;
@@ -11,8 +12,13 @@ import io.vertx.sqlclient.PoolOptions;
 public class OracleConnection extends AbstractConnection<OracleConnectOptions, OraclePool> {
     private static OracleConnection instance;
     private DatabaseConfig config;
-    public OracleConnection(Vertx vertx, JsonObject config) {
-        super(vertx);
+    public OracleConnection(String connectionName) {
+        this.config = DatabaseConfig.getInstance(Vertx.currentContext().config().getJsonObject("dbConnections").getJsonObject(connectionName));
+        this.connectionOptions = getConnectionOption();
+        this.poolOptions = getPoolOptions();
+        this.client = getSQLPool();
+    }
+    public OracleConnection(JsonObject config) {
         this.config = DatabaseConfig.getInstance(config);
         this.connectionOptions = getConnectionOption();
         this.poolOptions = getPoolOptions();
@@ -37,7 +43,10 @@ public class OracleConnection extends AbstractConnection<OracleConnectOptions, O
     }
 
 
-    public static OracleConnection getInstance(Vertx vertx, JsonObject config) {
-        return instance == null ? new OracleConnection(vertx, config) : instance;
+    public static OracleConnection getInstance(String connectionName) {
+        return instance == null ? new OracleConnection(connectionName) : instance;
+    }
+    public static OracleConnection getInstance(JsonObject config) {
+        return instance == null ? new OracleConnection(config) : instance;
     }
 }

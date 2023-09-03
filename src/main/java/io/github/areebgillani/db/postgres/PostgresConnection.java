@@ -1,5 +1,6 @@
 package io.github.areebgillani.db.postgres;
 
+import io.github.areebgillani.db.oracle.OracleConnection;
 import io.github.areebgillani.db.utils.AbstractConnection;
 import io.github.areebgillani.db.utils.DatabaseConfig;
 import io.vertx.core.Vertx;
@@ -11,9 +12,14 @@ import io.vertx.sqlclient.PoolOptions;
 public class PostgresConnection extends AbstractConnection<PgConnectOptions, PgPool> {
     private static PostgresConnection instance;
     private DatabaseConfig config;
-    
-    public PostgresConnection(Vertx vertx, JsonObject config) {
-        super(vertx);
+
+    public PostgresConnection(String connectionName) {
+        this.config = DatabaseConfig.getInstance(Vertx.currentContext().config().getJsonObject("dbConnections").getJsonObject(connectionName));
+        this.connectionOptions = getConnectionOption();
+        this.poolOptions = getPoolOptions();
+        this.client = getSQLPool();
+    }
+    public PostgresConnection(JsonObject config) {
         this.config = DatabaseConfig.getInstance(config);
         this.connectionOptions = getConnectionOption();
         this.poolOptions = getPoolOptions();
@@ -39,7 +45,10 @@ public class PostgresConnection extends AbstractConnection<PgConnectOptions, PgP
                 .setReconnectInterval(config.DB_RETRY_INTERVAL): this.connectionOptions;
     }
 
-    public static PostgresConnection getInstance(Vertx vertx, JsonObject config) {
-        return instance == null ? new PostgresConnection(vertx, config) : instance;
+    public static PostgresConnection getInstance(String connectionName) {
+        return instance == null ? new PostgresConnection(connectionName) : instance;
+    }
+    public static PostgresConnection getInstance(JsonObject config) {
+        return instance == null ? new PostgresConnection(config) : instance;
     }
 }

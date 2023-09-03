@@ -1,5 +1,6 @@
 package io.github.areebgillani.db.mssql;
 
+import io.github.areebgillani.db.mysql.MySQLConnection;
 import io.github.areebgillani.db.utils.AbstractConnection;
 import io.github.areebgillani.db.utils.DatabaseConfig;
 import io.vertx.core.Vertx;
@@ -11,8 +12,13 @@ import io.vertx.sqlclient.PoolOptions;
 public class MSSQLConnection extends AbstractConnection<MySQLConnectOptions, MySQLPool> {
     private static MSSQLConnection instance;
     private DatabaseConfig config;
-    public MSSQLConnection(Vertx vertx, JsonObject config) {
-        super(vertx);
+    public MSSQLConnection(String connectionName) {
+        this.config = DatabaseConfig.getInstance(Vertx.currentContext().config().getJsonObject("dbConnections").getJsonObject(connectionName));
+        this.connectionOptions = getConnectionOption();
+        this.poolOptions = getPoolOptions();
+        this.client = getSQLPool();
+    }
+    public MSSQLConnection(JsonObject config) {
         this.config = DatabaseConfig.getInstance(config);
         this.connectionOptions = getConnectionOption();
         this.poolOptions = getPoolOptions();
@@ -38,7 +44,10 @@ public class MSSQLConnection extends AbstractConnection<MySQLConnectOptions, MyS
                 .setReconnectInterval(config.DB_RETRY_INTERVAL): this.connectionOptions;
     }
 
-    public static MSSQLConnection getInstance(Vertx vertx, JsonObject config) {
-        return instance == null ? new MSSQLConnection(vertx, config) : instance;
+    public static MSSQLConnection getInstance(String connectionName) {
+        return instance == null ? new MSSQLConnection(connectionName) : instance;
+    }
+    public static MSSQLConnection getInstance(JsonObject config) {
+        return instance == null ? new MSSQLConnection(config) : instance;
     }
 }
