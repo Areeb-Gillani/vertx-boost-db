@@ -1,3 +1,4 @@
+[![](https://jitpack.io/v/Areeb-Gillani/vertx-boost-db.svg)](https://jitpack.io/#Areeb-Gillani/vertx-boost-db)
 # vertx-boost-db
 This project (BoostDB) provides are a more easy to write code approach to write data-access layer. Keeping in mind the learing curve of vertx this project is designed to be as closer to SpringData layer as possible. This project provides are multi-tenant approach to configure multiple datasources using connection configuration.
 # Background & Basics
