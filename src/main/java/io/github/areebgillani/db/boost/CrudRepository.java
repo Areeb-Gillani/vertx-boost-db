@@ -7,6 +7,6 @@ import io.vertx.core.json.JsonObject;
 
 public class CrudRepository<T> extends AbstractRepository<T> {
     public CrudRepository(Vertx vertx, String connectionName, JsonObject config){
-        databaseConnection = ConnectionHandler.getDBConnection(vertx,connectionName, config);
+        databaseConnection = ConnectionManager.getDBConnection(vertx,connectionName, config);
     }
 }

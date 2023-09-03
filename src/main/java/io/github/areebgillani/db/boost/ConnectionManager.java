@@ -10,7 +10,7 @@ import io.vertx.core.json.JsonObject;
 
 import java.util.HashMap;
 
-public class ConnectionHandler<T> {
+public class ConnectionManager<T> {
     private static final HashMap<String, Object> dbConnectionMap = new HashMap<>();
 
      private static <T extends AbstractConnection> Object createDatabaseConnection(Vertx vertx, JsonObject config){
