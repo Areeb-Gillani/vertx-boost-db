@@ -14,7 +14,7 @@ public class ConnectionManager<T> {
     private static final HashMap<String, Object> dbConnectionMap = new HashMap<>();
 
      private static <T extends AbstractConnection> Object createDatabaseConnection(String connectionName){
-         JsonObject conf = Vertx.currentContext().config().getJsonObject("dbConnections").getJsonObject(connectionName);
+         JsonObject conf = Vertx.currentContext().owner().getOrCreateContext().config().getJsonObject("dbConnections").getJsonObject(connectionName);
          return switch (DatabaseType.valueOf(conf.getString("dbType"))){
             case POSTGRESQL -> PostgresConnection.getInstance(conf);
             case MYSQL -> MySQLConnection.getInstance(conf);
