@@ -11,12 +11,6 @@ import io.vertx.sqlclient.PoolOptions;
 public class MySQLConnection extends AbstractConnection<MySQLConnectOptions, MySQLPool> {
     private static MySQLConnection instance;
     private DatabaseConfig config;
-    public MySQLConnection(String connectionName) {
-        this.config = DatabaseConfig.getInstance(Vertx.currentContext().config().getJsonObject("dbConnections").getJsonObject(connectionName));
-        this.connectionOptions = getConnectionOption();
-        this.poolOptions = getPoolOptions();
-        this.client = getSQLPool();
-    }
     public MySQLConnection(JsonObject config) {
         this.config = DatabaseConfig.getInstance(config);
         this.connectionOptions = getConnectionOption();
@@ -41,9 +35,6 @@ public class MySQLConnection extends AbstractConnection<MySQLConnectOptions, MyS
                 .setPassword(config.DB_PASSWORD)
                 .setReconnectAttempts(config.DB_RETRY_COUNT)
                 .setReconnectInterval(config.DB_RETRY_INTERVAL): this.connectionOptions;
-    }
-    public static MySQLConnection getInstance(String connectionName) {
-        return instance == null ? new MySQLConnection(connectionName) : instance;
     }
     public static MySQLConnection getInstance(JsonObject config) {
         return instance == null ? new MySQLConnection(config) : instance;

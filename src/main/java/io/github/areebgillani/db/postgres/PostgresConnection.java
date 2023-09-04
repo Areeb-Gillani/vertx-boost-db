@@ -12,13 +12,6 @@ import io.vertx.sqlclient.PoolOptions;
 public class PostgresConnection extends AbstractConnection<PgConnectOptions, PgPool> {
     private static PostgresConnection instance;
     private DatabaseConfig config;
-
-    public PostgresConnection(String connectionName) {
-        this.config = DatabaseConfig.getInstance(Vertx.currentContext().config().getJsonObject("dbConnections").getJsonObject(connectionName));
-        this.connectionOptions = getConnectionOption();
-        this.poolOptions = getPoolOptions();
-        this.client = getSQLPool();
-    }
     public PostgresConnection(JsonObject config) {
         this.config = DatabaseConfig.getInstance(config);
         this.connectionOptions = getConnectionOption();
@@ -43,10 +36,6 @@ public class PostgresConnection extends AbstractConnection<PgConnectOptions, PgP
                 .setPassword(config.DB_PASSWORD)
                 .setReconnectAttempts(config.DB_RETRY_COUNT)
                 .setReconnectInterval(config.DB_RETRY_INTERVAL): this.connectionOptions;
-    }
-
-    public static PostgresConnection getInstance(String connectionName) {
-        return instance == null ? new PostgresConnection(connectionName) : instance;
     }
     public static PostgresConnection getInstance(JsonObject config) {
         return instance == null ? new PostgresConnection(config) : instance;

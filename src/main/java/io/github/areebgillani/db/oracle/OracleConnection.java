@@ -12,12 +12,6 @@ import io.vertx.sqlclient.PoolOptions;
 public class OracleConnection extends AbstractConnection<OracleConnectOptions, OraclePool> {
     private static OracleConnection instance;
     private DatabaseConfig config;
-    public OracleConnection(String connectionName) {
-        this.config = DatabaseConfig.getInstance(Vertx.currentContext().config().getJsonObject("dbConnections").getJsonObject(connectionName));
-        this.connectionOptions = getConnectionOption();
-        this.poolOptions = getPoolOptions();
-        this.client = getSQLPool();
-    }
     public OracleConnection(JsonObject config) {
         this.config = DatabaseConfig.getInstance(config);
         this.connectionOptions = getConnectionOption();
@@ -40,11 +34,6 @@ public class OracleConnection extends AbstractConnection<OracleConnectOptions, O
                 .setDatabase(config.DB_NAME)
                 .setUser(config.DB_USERNAME)
                 .setPassword(config.DB_PASSWORD) : this.connectionOptions;
-    }
-
-
-    public static OracleConnection getInstance(String connectionName) {
-        return instance == null ? new OracleConnection(connectionName) : instance;
     }
     public static OracleConnection getInstance(JsonObject config) {
         return instance == null ? new OracleConnection(config) : instance;

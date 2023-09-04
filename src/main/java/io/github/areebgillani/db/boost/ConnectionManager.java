@@ -13,8 +13,8 @@ import java.util.HashMap;
 public class ConnectionManager<T> {
     private static final HashMap<String, Object> dbConnectionMap = new HashMap<>();
 
-     private static <T extends AbstractConnection> Object createDatabaseConnection(String connectionName){
-         JsonObject conf = Vertx.currentContext().owner().getOrCreateContext().config().getJsonObject("dbConnections").getJsonObject(connectionName);
+     private static <T extends AbstractConnection> Object createDatabaseConnection(String connectionName, JsonObject config){
+         JsonObject conf = config.getJsonObject("dbConnections").getJsonObject(connectionName);
          return switch (DatabaseType.valueOf(conf.getString("dbType"))){
             case POSTGRESQL -> PostgresConnection.getInstance(conf);
             case MYSQL -> MySQLConnection.getInstance(conf);
@@ -22,7 +22,7 @@ public class ConnectionManager<T> {
             case MSSQL -> MSSQLConnection.getInstance(conf);
         };
     }
-    public static <T extends AbstractConnection> T getDBConnection(String connectionName){
-        return (T) dbConnectionMap.computeIfAbsent(connectionName, ConnectionManager::createDatabaseConnection);
+    public static <T extends AbstractConnection> T getDBConnection(String connectionName, JsonObject config){
+        return (T) dbConnectionMap.computeIfAbsent(connectionName, cn->createDatabaseConnection(cn,config));
     }
 }

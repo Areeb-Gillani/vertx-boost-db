@@ -6,7 +6,7 @@ import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
 
 public class MySQLRepository<T> extends AbstractRepository<T> {
-    public MySQLRepository(String connectionName){
-        databaseConnection = MySQLConnection.getInstance(connectionName);
+    public MySQLRepository(String connectionName, JsonObject config){
+        databaseConnection = MySQLConnection.getInstance(config.getJsonObject("dbConnections").getJsonObject(connectionName));
     }
 }

@@ -12,12 +12,6 @@ import io.vertx.sqlclient.PoolOptions;
 public class MSSQLConnection extends AbstractConnection<MySQLConnectOptions, MySQLPool> {
     private static MSSQLConnection instance;
     private DatabaseConfig config;
-    public MSSQLConnection(String connectionName) {
-        this.config = DatabaseConfig.getInstance(Vertx.currentContext().config().getJsonObject("dbConnections").getJsonObject(connectionName));
-        this.connectionOptions = getConnectionOption();
-        this.poolOptions = getPoolOptions();
-        this.client = getSQLPool();
-    }
     public MSSQLConnection(JsonObject config) {
         this.config = DatabaseConfig.getInstance(config);
         this.connectionOptions = getConnectionOption();
@@ -42,10 +36,6 @@ public class MSSQLConnection extends AbstractConnection<MySQLConnectOptions, MyS
                 .setPassword(config.DB_PASSWORD)
                 .setReconnectAttempts(config.DB_RETRY_COUNT)
                 .setReconnectInterval(config.DB_RETRY_INTERVAL): this.connectionOptions;
-    }
-
-    public static MSSQLConnection getInstance(String connectionName) {
-        return instance == null ? new MSSQLConnection(connectionName) : instance;
     }
     public static MSSQLConnection getInstance(JsonObject config) {
         return instance == null ? new MSSQLConnection(config) : instance;
