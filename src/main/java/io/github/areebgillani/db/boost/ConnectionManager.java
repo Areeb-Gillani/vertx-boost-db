@@ -13,16 +13,20 @@ import java.util.HashMap;
 public class ConnectionManager<T> {
     private static final HashMap<String, Object> dbConnectionMap = new HashMap<>();
 
-     private static <T extends AbstractConnection> Object createDatabaseConnection(String connectionName, JsonObject config){
-         JsonObject conf = config.getJsonObject("dbConnections").getJsonObject(connectionName);
-         return switch (DatabaseType.valueOf(conf.getString("dbType"))){
+    private static <T extends AbstractConnection> Object createDatabaseConnection(String connectionName, JsonObject config) {
+        JsonObject conf = config.getJsonObject("dbConnections").getJsonObject(connectionName);
+        return switch (DatabaseType.valueOf(conf.getString("dbType"))) {
             case POSTGRESQL -> PostgresConnection.getInstance(conf);
             case MYSQL -> MySQLConnection.getInstance(conf);
             case ORACLE -> OracleConnection.getInstance(conf);
             case MSSQL -> MSSQLConnection.getInstance(conf);
         };
     }
-    public static <T extends AbstractConnection> T getDBConnection(String connectionName, JsonObject config){
-        return (T) dbConnectionMap.computeIfAbsent(connectionName, cn->createDatabaseConnection(cn,config));
+
+    public static <T extends AbstractConnection> T getDBConnection(String connectionName, JsonObject config) {
+        Object con = dbConnectionMap.get(connectionName);
+        if (con == null)
+            con = dbConnectionMap.put(connectionName, createDatabaseConnection(connectionName, config));
+        return (T) con;
     }
 }
