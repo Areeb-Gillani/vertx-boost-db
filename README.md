@@ -11,8 +11,8 @@ Vertx, out of the box, provides SQL and NoSQL clients. Whereas those clients are
 ### Why BoostDB?
 BoostDB helps you code in a very similar way to what you are used to in Spring. Just because the learning curve of vertx itself is a little tricky, it will also be a bit messy to arrange your code in the best possible way. This project helps you in the best possible way to write performance-efficient code without worrying about the bits and pieces of low-end code.
 # Dependency
- Add it in your root build.gradle at the end of repositories
 ### Repository
+#### build.gradle
 ```kotlin
 allprojects {
         repositories {
@@ -20,12 +20,33 @@ allprojects {
         }
     }
 ```
-### Adding Dependency
- 
+#### pom.xml
+```xml
+<repositories>
+  ...
+  <repository>
+      <id>jitpack.io</id>
+      <url>https://jitpack.io</url>
+  </repository>
+</repositories>
+```
+### Dependency
+#### build.gradle
 ```kotlin
 dependencies {
-  implementation ("com.github.Areeb-Gillani:vertx-boost-db:0.0.1")
+  implementation ("com.github.Areeb-Gillani:vertx-boost-db:0.0.3")
 }
+```
+#### pom.xml
+```xml
+<dependencies>
+  ...
+	<dependency>
+	    <groupId>com.github.Areeb-Gillani</groupId>
+	    <artifactId>vertx-boost-db</artifactId>
+	    <version>0.0.3</version>
+	</dependency>
+</dependencies>
 ```
 # Config
 One can add multiple connection configurations in this way, and upon creating the repository, please make sure you pass the right connection name so that if the connection is not available in the application, it will be created.
