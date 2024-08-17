@@ -4,16 +4,21 @@ plugins {
 }
 
 group = "io.github.areebgillani"
-version = "0.0.3"
+version = "0.0.4"
 publishing {
     publications {
         create<MavenPublication>("maven") {
-            groupId = "io.github.areebgillani"
+            groupId = project.group.toString()
             artifactId = rootProject.name
-            version = "0.0.3"
-
+            version = project.version.toString()
             from(components["java"])
         }
+    }
+}
+tasks.publishToMavenLocal {
+    dependsOn(tasks.build)
+    onlyIf {
+        true
     }
 }
 repositories {
