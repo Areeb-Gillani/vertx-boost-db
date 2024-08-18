@@ -34,7 +34,7 @@ allprojects {
 #### build.gradle
 ```kotlin
 dependencies {
-  implementation ("com.github.Areeb-Gillani:vertx-boost-db:0.0.3")
+  implementation ("com.github.Areeb-Gillani:vertx-boost-db:0.0.4")
 }
 ```
 #### pom.xml
@@ -44,7 +44,7 @@ dependencies {
 	<dependency>
 	    <groupId>com.github.Areeb-Gillani</groupId>
 	    <artifactId>vertx-boost-db</artifactId>
-	    <version>0.0.3</version>
+	    <version>0.0.4</version>
 	</dependency>
 </dependencies>
 ```
@@ -67,12 +67,13 @@ One can add multiple connection configurations in this way, and upon creating th
     },
     "MySecondConnection": {
       "dbName": "example_database",
-      "dbHost":"127.0.0.1",
-      "dbPort": 1433,
+      "dbHost":"192.168.1.10",
+      "dbPort": 1521,
       "dbUsername": "root",
       "dbPassword": "password",
+      "serviceName":"o19c"
       "dbConnectionPoolSize": 10,
-      "dbType": "MSSQL",
+      "dbType": "ORACLE",
       "dbRetryCount": 5,
       "dbRetryInterval": 1000
     }
