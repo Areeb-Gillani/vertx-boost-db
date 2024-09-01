@@ -35,7 +35,12 @@ public class AbstractRepository<T>{
     public CompletableFuture<Boolean> delete(T obj, String query, TupleMapper<T> mapper) {
         return save(obj, query, mapper);
     }
+
     public CompletableFuture<List<T>> read(String query, RowMapper<T> mapper, HashMap<String, Object> params) {
+        return read(query, mapper, (Map<String, Object>)params);
+    }
+
+    public CompletableFuture<List<T>> read(String query, RowMapper<T> mapper, Map<String, Object> params) {
         CompletableFuture<List<T>> future = new CompletableFuture<>();
         List<T> list = new LinkedList<>();
         SqlTemplate.forQuery((SqlClient) databaseConnection.client, query)
