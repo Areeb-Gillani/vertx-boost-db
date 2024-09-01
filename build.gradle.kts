@@ -3,14 +3,22 @@ plugins {
     id("maven-publish")
 }
 
-group = "io.github.areebgillani"
-version = "0.0.3"
+val vertxVersion = "4.5.9"
+
+group = "io.github.Areeb-Gillani"
+version = "0.1.0"
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
 publishing {
     publications {
         create<MavenPublication>("maven") {
-            groupId = "io.github.areebgillani"
+            groupId = rootProject.group.toString()
             artifactId = rootProject.name
-            version = "0.0.3"
+            version = rootProject.version.toString()
 
             from(components["java"])
         }
@@ -18,15 +26,16 @@ publishing {
 }
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
-    compileOnly("io.vertx:vertx-web:4.4.4")
-    compileOnly("io.vertx:vertx-mysql-client:4.4.4")
-    compileOnly("io.vertx:vertx-pg-client:4.4.4")
-    compileOnly("io.vertx:vertx-oracle-client:4.4.4")
-    compileOnly("io.vertx:vertx-mssql-client:4.4.4")
-    implementation("io.vertx:vertx-sql-client-templates:4.4.4")
-    implementation("org.projectlombok:lombok:1.18.28")
+    compileOnly("io.vertx:vertx-web:$vertxVersion")
+    compileOnly("io.vertx:vertx-mysql-client:$vertxVersion")
+    compileOnly("io.vertx:vertx-pg-client:$vertxVersion")
+    compileOnly("io.vertx:vertx-oracle-client:$vertxVersion")
+    compileOnly("io.vertx:vertx-mssql-client:$vertxVersion")
+    implementation("io.vertx:vertx-sql-client-templates:$vertxVersion")
+    implementation("org.projectlombok:lombok:1.18.34")
 
 }
