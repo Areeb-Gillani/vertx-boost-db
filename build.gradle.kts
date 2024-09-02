@@ -5,6 +5,7 @@ plugins {
 
 group = "io.github.areebgillani"
 version = "0.0.5"
+val vertxVersion="4.4.5"
 publishing {
     publications {
         create<MavenPublication>("maven") {
@@ -26,12 +27,12 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.vertx:vertx-web:4.4.4")
-    compileOnly("io.vertx:vertx-mysql-client:4.4.4")
-    compileOnly("io.vertx:vertx-pg-client:4.4.4")
-    compileOnly("io.vertx:vertx-oracle-client:4.4.4")
-    compileOnly("io.vertx:vertx-mssql-client:4.4.4")
-    implementation("io.vertx:vertx-sql-client-templates:4.4.4")
+    compileOnly("io.vertx:vertx-web:$vertxVersion")
+    compileOnly("io.vertx:vertx-mysql-client:$vertxVersion")
+    compileOnly("io.vertx:vertx-pg-client:$vertxVersion")
+    compileOnly("io.vertx:vertx-oracle-client:$vertxVersion")
+    compileOnly("io.vertx:vertx-mssql-client:$vertxVersion")
+    implementation("io.vertx:vertx-sql-client-templates:$vertxVersion")
     implementation("org.projectlombok:lombok:1.18.28")
 
 }
