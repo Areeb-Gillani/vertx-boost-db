@@ -2,7 +2,6 @@ package io.github.areebgillani.db.mysql;
 
 import io.github.areebgillani.db.utils.AbstractConnection;
 import io.github.areebgillani.db.utils.DatabaseConfig;
-import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
 import io.vertx.mysqlclient.MySQLConnectOptions;
 import io.vertx.mysqlclient.MySQLPool;

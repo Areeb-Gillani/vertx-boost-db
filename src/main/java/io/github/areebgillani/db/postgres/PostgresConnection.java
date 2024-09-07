@@ -1,9 +1,7 @@
 package io.github.areebgillani.db.postgres;
 
-import io.github.areebgillani.db.oracle.OracleConnection;
 import io.github.areebgillani.db.utils.AbstractConnection;
 import io.github.areebgillani.db.utils.DatabaseConfig;
-import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
 import io.vertx.pgclient.PgConnectOptions;
 import io.vertx.pgclient.PgPool;

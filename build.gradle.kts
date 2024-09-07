@@ -4,8 +4,8 @@ plugins {
 }
 
 group = "io.github.areebgillani"
-version = "0.0.5"
-val vertxVersion="4.4.5"
+version = "0.0.6"
+val vertxVersion="4.5.8"
 publishing {
     publications {
         create<MavenPublication>("maven") {

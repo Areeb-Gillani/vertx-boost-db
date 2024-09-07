@@ -2,7 +2,6 @@ package io.github.areebgillani.db.oracle;
 
 
 import io.github.areebgillani.db.utils.AbstractRepository;
-import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
 
 public class OracleRepository<T> extends AbstractRepository<T> {

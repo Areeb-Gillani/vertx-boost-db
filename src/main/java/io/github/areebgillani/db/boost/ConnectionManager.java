@@ -1,11 +1,10 @@
 package io.github.areebgillani.db.boost;
 
+import io.github.areebgillani.db.mssql.MSSQLConnection;
 import io.github.areebgillani.db.mysql.MySQLConnection;
 import io.github.areebgillani.db.oracle.OracleConnection;
 import io.github.areebgillani.db.postgres.PostgresConnection;
 import io.github.areebgillani.db.utils.AbstractConnection;
-import io.github.areebgillani.db.mssql.MSSQLConnection;
-import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
 
 import java.util.HashMap;
