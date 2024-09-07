@@ -34,7 +34,7 @@ allprojects {
 #### build.gradle
 ```kotlin
 dependencies {
-  implementation ("com.github.Areeb-Gillani:vertx-boost-db:0.0.4")
+  implementation ("com.github.Areeb-Gillani:vertx-boost-db:0.0.6")
 }
 ```
 #### pom.xml
@@ -44,7 +44,7 @@ dependencies {
 	<dependency>
 	    <groupId>com.github.Areeb-Gillani</groupId>
 	    <artifactId>vertx-boost-db</artifactId>
-	    <version>0.0.4</version>
+	    <version>0.0.6</version>
 	</dependency>
 </dependencies>
 ```
@@ -85,28 +85,26 @@ One can add multiple connection configurations in this way, and upon creating th
 This project out of the box gives CrudRepository, MySQLRepository, MSSQLRepository, PostgresRepository, and OracleRepository which a user can extend. It is preferred to use CrudRepository as its factory can create all types of repos based on the dbType attribute present in the connection configuration. 
  
 ```java
-public class MyRepo extends CrudRepository {
-    public MyRepo(String connectionName){
-        super(connectionName);
-    }
-    //Please code other related stuff here.
+@Repository("MyDbConfig")
+public class DatabaseRepo extends CrudRepository<ExampleModel>{
+   public DatabaseRepo (String connectionName, JsonObject config){
+      super(connectionName, config);
+   }
+    //Write other db operations here your CRUD operations are already covered above 
 }
 ```
+VertxBoost's ([![](https://jitpack.io/v/Areeb-Gillani/vertx-boost.svg)](https://jitpack.io/#Areeb-Gillani/vertx-boost)) service class has been used in order to demo the usage
 ```java
-public class ExampleCaller {
-    MyRepo repo;
-    public void someDatabaseOperation(){
-        repo = new MyRepo("Primary"); // "Primary" is same identifier you saw in configuration JSON.
-        // You can create this object as many times as you want
-        // because the parent is initializing the connection on singleton pattern
-        // This is independent of connection pool size 
-    }
+@Service("SomeWorker")
+public class ExampleService extends AbstractService {
+    @Autowired
+    DatabaseRepo repo;
     //Please code other related stuff here.
 }
 ```
 #### Note: Please include the specific client driver in your build.gradle in order to make this code work.
 ```kotlin
     dependencies{
-          implementation ("io.vertx:vertx-mysql-client:4.4.5")
+          implementation ("io.vertx:vertx-mysql-client:4.5.8")
     }
 ```
