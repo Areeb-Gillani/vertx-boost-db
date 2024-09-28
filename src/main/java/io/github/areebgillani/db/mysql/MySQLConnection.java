@@ -1,28 +1,19 @@
 package io.github.areebgillani.db.mysql;
 
 import io.github.areebgillani.db.utils.AbstractConnection;
+import io.github.areebgillani.db.utils.AbstractSQLConnection;
 import io.github.areebgillani.db.utils.DatabaseConfig;
 import io.vertx.core.json.JsonObject;
 import io.vertx.mysqlclient.MySQLConnectOptions;
 import io.vertx.mysqlclient.MySQLPool;
+import io.vertx.sqlclient.Pool;
 import io.vertx.sqlclient.PoolOptions;
 
-public class MySQLConnection extends AbstractConnection<MySQLConnectOptions, MySQLPool> {
+public class MySQLConnection extends AbstractSQLConnection<MySQLConnectOptions> {
     private static MySQLConnection instance;
-    private DatabaseConfig config;
     public MySQLConnection(JsonObject config) {
-        this.config = DatabaseConfig.getInstance(config);
+        super(config);
         this.connectionOptions = getConnectionOption();
-        this.poolOptions = getPoolOptions();
-        this.client = getSQLPool();
-    }
-
-    protected MySQLPool getSQLPool() {
-        return this.client == null ? MySQLPool.pool(vertx, connectionOptions, poolOptions) : this.client;
-    }
-
-    protected PoolOptions getPoolOptions() {
-        return this.poolOptions == null ? new PoolOptions().setMaxSize(config.DB_POOL_SIZE) : poolOptions;
     }
 
     protected MySQLConnectOptions getConnectionOption() {

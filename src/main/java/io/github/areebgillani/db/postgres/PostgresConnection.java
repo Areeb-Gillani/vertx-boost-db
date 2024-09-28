@@ -1,28 +1,19 @@
 package io.github.areebgillani.db.postgres;
 
 import io.github.areebgillani.db.utils.AbstractConnection;
+import io.github.areebgillani.db.utils.AbstractSQLConnection;
 import io.github.areebgillani.db.utils.DatabaseConfig;
 import io.vertx.core.json.JsonObject;
 import io.vertx.pgclient.PgConnectOptions;
 import io.vertx.pgclient.PgPool;
 import io.vertx.sqlclient.PoolOptions;
 
-public class PostgresConnection extends AbstractConnection<PgConnectOptions, PgPool> {
+public class PostgresConnection extends AbstractSQLConnection<PgConnectOptions> {
     private static PostgresConnection instance;
     private DatabaseConfig config;
     public PostgresConnection(JsonObject config) {
-        this.config = DatabaseConfig.getInstance(config);
+        super(config);
         this.connectionOptions = getConnectionOption();
-        this.poolOptions = getPoolOptions();
-        this.client = getSQLPool();
-    }
-
-    protected PgPool getSQLPool() {
-        return this.client == null ? PgPool.pool(vertx, connectionOptions, poolOptions) : this.client;
-    }
-
-    protected PoolOptions getPoolOptions() {
-        return this.poolOptions == null ? new PoolOptions().setMaxSize(config.DB_POOL_SIZE) : poolOptions;
     }
 
     protected PgConnectOptions getConnectionOption() {

@@ -23,9 +23,6 @@ public class ConnectionManager<T> {
     }
 
     public static <T extends AbstractConnection> T getDBConnection(String connectionName, JsonObject config) {
-        Object con = dbConnectionMap.get(connectionName);
-        if (con == null)
-            con = dbConnectionMap.put(connectionName, createDatabaseConnection(connectionName, config));
-        return (T) con;
+        return (T) dbConnectionMap.computeIfAbsent(connectionName, key->createDatabaseConnection(key, config));
     }
 }

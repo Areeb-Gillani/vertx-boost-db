@@ -16,7 +16,5 @@ public abstract class AbstractConnection<T, C> {
 
     protected abstract C getSQLPool();
 
-    protected abstract PoolOptions getPoolOptions();
-
-    protected abstract T getConnectionOption();
+    protected abstract PoolOptions getPoolOptions(int poolSize);
 }

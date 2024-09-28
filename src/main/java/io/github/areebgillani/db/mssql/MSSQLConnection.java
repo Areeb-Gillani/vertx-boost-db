@@ -1,32 +1,23 @@
 package io.github.areebgillani.db.mssql;
 
 import io.github.areebgillani.db.utils.AbstractConnection;
+import io.github.areebgillani.db.utils.AbstractSQLConnection;
 import io.github.areebgillani.db.utils.DatabaseConfig;
 import io.vertx.core.json.JsonObject;
+import io.vertx.mssqlclient.MSSQLConnectOptions;
 import io.vertx.mysqlclient.MySQLConnectOptions;
 import io.vertx.mysqlclient.MySQLPool;
 import io.vertx.sqlclient.PoolOptions;
 
-public class MSSQLConnection extends AbstractConnection<MySQLConnectOptions, MySQLPool> {
+public class MSSQLConnection extends AbstractSQLConnection<MSSQLConnectOptions> {
     private static MSSQLConnection instance;
     private DatabaseConfig config;
     public MSSQLConnection(JsonObject config) {
-        this.config = DatabaseConfig.getInstance(config);
+        super(config);
         this.connectionOptions = getConnectionOption();
-        this.poolOptions = getPoolOptions();
-        this.client = getSQLPool();
     }
-
-    protected MySQLPool getSQLPool() {
-        return this.client == null ? MySQLPool.pool(vertx, connectionOptions, poolOptions) : this.client;
-    }
-
-    protected PoolOptions getPoolOptions() {
-        return this.poolOptions == null ? new PoolOptions().setMaxSize(config.DB_POOL_SIZE) : poolOptions;
-    }
-
-    protected MySQLConnectOptions getConnectionOption() {
-        return this.connectionOptions == null ? new MySQLConnectOptions()
+    protected MSSQLConnectOptions getConnectionOption() {
+        return this.connectionOptions == null ? new MSSQLConnectOptions()
                 .setPort(config.DB_PORT)
                 .setHost(config.DB_HOST)
                 .setDatabase(config.DB_NAME)
