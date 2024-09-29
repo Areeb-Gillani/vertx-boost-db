@@ -15,7 +15,7 @@ public abstract class AbstractSQLConnection <T extends SqlConnectOptions> extend
 
     @Override
     protected Pool getSQLPool() {
-        return this.client == null ? Pool.pool(vertx, connectionOptions, poolOptions) : this.client;
+        return this.client == null ? Pool.pool(vertx, getConnectionOption(), poolOptions) : this.client;
     }
     @Override
     protected PoolOptions getPoolOptions(int poolSize) {
