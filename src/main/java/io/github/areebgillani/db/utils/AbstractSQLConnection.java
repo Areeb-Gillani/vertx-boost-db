@@ -12,10 +12,8 @@ public abstract class AbstractSQLConnection<T extends SqlConnectOptions> impleme
     public Pool client;
     protected T connectionOptions;
     PoolOptions poolOptions;
-    public AbstractSQLConnection(){
-        this.vertx = Vertx.currentContext().owner();
-    }
     public AbstractSQLConnection(JsonObject config) {
+        this.vertx = Vertx.currentContext().owner();
         this.config = DatabaseConfig.getInstance(config);
         this.poolOptions = getPoolOptions(this.config.DB_POOL_SIZE);
         this.client = getDBPool();
