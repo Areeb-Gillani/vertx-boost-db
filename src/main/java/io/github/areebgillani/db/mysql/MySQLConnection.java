@@ -1,13 +1,8 @@
 package io.github.areebgillani.db.mysql;
 
-import io.github.areebgillani.db.utils.AbstractConnection;
 import io.github.areebgillani.db.utils.AbstractSQLConnection;
-import io.github.areebgillani.db.utils.DatabaseConfig;
 import io.vertx.core.json.JsonObject;
 import io.vertx.mysqlclient.MySQLConnectOptions;
-import io.vertx.mysqlclient.MySQLPool;
-import io.vertx.sqlclient.Pool;
-import io.vertx.sqlclient.PoolOptions;
 
 public class MySQLConnection extends AbstractSQLConnection<MySQLConnectOptions> {
     private static MySQLConnection instance;

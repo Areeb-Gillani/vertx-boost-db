@@ -1,13 +1,9 @@
 package io.github.areebgillani.db.mssql;
 
-import io.github.areebgillani.db.utils.AbstractConnection;
 import io.github.areebgillani.db.utils.AbstractSQLConnection;
 import io.github.areebgillani.db.utils.DatabaseConfig;
 import io.vertx.core.json.JsonObject;
 import io.vertx.mssqlclient.MSSQLConnectOptions;
-import io.vertx.mysqlclient.MySQLConnectOptions;
-import io.vertx.mysqlclient.MySQLPool;
-import io.vertx.sqlclient.PoolOptions;
 
 public class MSSQLConnection extends AbstractSQLConnection<MSSQLConnectOptions> {
     private static MSSQLConnection instance;

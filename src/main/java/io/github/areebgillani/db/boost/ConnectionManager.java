@@ -4,15 +4,17 @@ import io.github.areebgillani.db.mssql.MSSQLConnection;
 import io.github.areebgillani.db.mysql.MySQLConnection;
 import io.github.areebgillani.db.oracle.OracleConnection;
 import io.github.areebgillani.db.postgres.PostgresConnection;
-import io.github.areebgillani.db.utils.AbstractConnection;
+import io.github.areebgillani.db.utils.AbstractSQLConnection;
+import io.github.areebgillani.db.utils.DBConnection;
 import io.vertx.core.json.JsonObject;
+import io.vertx.sqlclient.SqlConnectOptions;
 
 import java.util.HashMap;
 
 public class ConnectionManager<T> {
     private static final HashMap<String, Object> dbConnectionMap = new HashMap<>();
 
-    private static <T extends AbstractConnection> Object createDatabaseConnection(String connectionName, JsonObject config) {
+    private static <T extends AbstractSQLConnection> Object createDatabaseConnection(String connectionName, JsonObject config) {
         JsonObject conf = config.getJsonObject("dbConnections").getJsonObject(connectionName);
         return switch (DatabaseType.valueOf(conf.getString("dbType"))) {
             case POSTGRESQL -> PostgresConnection.getInstance(conf);
@@ -22,7 +24,7 @@ public class ConnectionManager<T> {
         };
     }
 
-    public static <T extends AbstractConnection> T getDBConnection(String connectionName, JsonObject config) {
+    public static <T extends AbstractSQLConnection> T getDBConnection(String connectionName, JsonObject config) {
         return (T) dbConnectionMap.computeIfAbsent(connectionName, key->createDatabaseConnection(key, config));
     }
 }

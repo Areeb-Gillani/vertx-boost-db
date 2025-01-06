@@ -1,24 +1,32 @@
 package io.github.areebgillani.db.utils;
 
+import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
 import io.vertx.sqlclient.Pool;
 import io.vertx.sqlclient.PoolOptions;
 import io.vertx.sqlclient.SqlConnectOptions;
 
-public abstract class AbstractSQLConnection <T extends SqlConnectOptions> extends AbstractConnection <T, Pool>{
+public abstract class AbstractSQLConnection<T extends SqlConnectOptions> implements DBConnection<T, Pool> {
     protected DatabaseConfig config;
+    protected Vertx vertx;
+    public Pool client;
+    protected T connectionOptions;
+    PoolOptions poolOptions;
+    public AbstractSQLConnection(){
+        this.vertx = Vertx.currentContext().owner();
+    }
     public AbstractSQLConnection(JsonObject config) {
         this.config = DatabaseConfig.getInstance(config);
         this.poolOptions = getPoolOptions(this.config.DB_POOL_SIZE);
-        this.client = getSQLPool();
+        this.client = getDBPool();
     }
 
     @Override
-    protected Pool getSQLPool() {
+    public Pool getDBPool() {
         return this.client == null ? Pool.pool(vertx, getConnectionOption(), poolOptions) : this.client;
     }
     @Override
-    protected PoolOptions getPoolOptions(int poolSize) {
+    public PoolOptions getPoolOptions(int poolSize) {
         return this.poolOptions == null ? new PoolOptions().setMaxSize(poolSize) : poolOptions;
     }
 
