@@ -34,7 +34,7 @@ allprojects {
 #### build.gradle
 ```kotlin
 dependencies {
-  implementation ("com.github.Areeb-Gillani:vertx-boost-db:0.0.7")
+  implementation ("com.github.Areeb-Gillani:vertx-boost-db:1.0.0")
 }
 ```
 #### pom.xml
@@ -44,7 +44,7 @@ dependencies {
 	<dependency>
 	    <groupId>com.github.Areeb-Gillani</groupId>
 	    <artifactId>vertx-boost-db</artifactId>
-	    <version>0.0.7</version>
+	    <version>1.0.0</version>
 	</dependency>
 </dependencies>
 ```
